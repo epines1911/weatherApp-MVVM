@@ -1,18 +1,19 @@
 package com.xiaowang.weatherapp.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import com.xiaowang.weatherapp.model.weatherModel
-import com.xiaowang.weatherapp.service.weatherAPIService
+import androidx.lifecycle.ViewModel
+import com.xiaowang.weatherapp.model.WeatherModel
+import com.xiaowang.weatherapp.service.WeatherAPIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class mainViewModel {
-    private val WeatherAPIService = weatherAPIService()
+class MainViewModel: ViewModel() {
+    private val weatherAPIService = WeatherAPIService()
     private val disposable = CompositeDisposable()
 
-    val weatherData = MutableLiveData<weatherModel>()
+    val weatherData = MutableLiveData<WeatherModel>()
     val weatherError = MutableLiveData<Boolean>()
     val weatherLoad = MutableLiveData<Boolean>()
 
@@ -23,10 +24,10 @@ class mainViewModel {
     private fun getDataFromAPI() {
         weatherLoad.value = true
         disposable.add(
-            WeatherAPIService.getDataService().subscribeOn(Schedulers.newThread())
+            weatherAPIService.getDataService().subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object: DisposableSingleObserver<weatherModel>(){
-                    override fun onSuccess(t: weatherModel) {
+                .subscribeWith(object: DisposableSingleObserver<WeatherModel>(){
+                    override fun onSuccess(t: WeatherModel) {
                         weatherData.value = t
                         weatherError.value = false
                         weatherLoad.value = false
