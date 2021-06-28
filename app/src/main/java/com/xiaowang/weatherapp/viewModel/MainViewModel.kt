@@ -17,14 +17,14 @@ class MainViewModel: ViewModel() {
     val weatherError = MutableLiveData<Boolean>()
     val weatherLoad = MutableLiveData<Boolean>()
 
-    fun refreshData(){
-        getDataFromAPI()
+    fun refreshData(cityName: String){
+        getDataFromAPI(cityName)
     }
 
-    private fun getDataFromAPI() {
+    private fun getDataFromAPI(cityName: String) {
         weatherLoad.value = true
         disposable.add(
-            weatherAPIService.getDataService().subscribeOn(Schedulers.newThread())
+            weatherAPIService.getDataService(cityName).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<WeatherModel>(){
                     override fun onSuccess(t: WeatherModel) {

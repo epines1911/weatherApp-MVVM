@@ -26,12 +26,31 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        var cityName = GET.getString("cityName", "Beijing")
-        edt_search.setText(cityName)
+        var cityName = GET.getString("cityName", "Beijing").toString()
+//        edt_search.setText(cityName)
 
-        viewModel.refreshData()
+        viewModel.refreshData(cityName)
 
         getLiveData()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            tv_temperature.visibility = View.GONE
+            tv_error.visibility = View.GONE
+            progressBar_loading.visibility = View.GONE
+
+            var cityName2 = GET.getString("cityName",cityName).toString()
+            edt_search.setText(cityName2)
+            viewModel.refreshData(cityName2)
+            swipeRefreshLayout.isRefreshing = false
+        }
+
+        img_search.setOnClickListener {
+            val cityNameForSearch = edt_search.text.toString()
+            SET.putString("cityName", cityNameForSearch)
+            SET.apply()
+            viewModel.refreshData(cityNameForSearch)
+            getLiveData()
+        }
 
     }
 
