@@ -1,7 +1,8 @@
-package com.xiaowang.weatherapp
+package com.xiaowang.weatherapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.xiaowang.weatherapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
