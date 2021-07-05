@@ -1,5 +1,5 @@
 # 简易天气APP（Weather-App-MVVM）
-为了学习MVVM模式。 
+可以查询任意城市天气的简易天气APP，为了学习MVVM模式。天气数据来源：OpenWeather 
 
 ## 项目特点：
 - 使用Kotlin语言
